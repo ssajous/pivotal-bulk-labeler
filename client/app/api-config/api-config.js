@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pivotalBulkLabelerApp')
+angular.module('pivotalUtilsApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('api-config', {

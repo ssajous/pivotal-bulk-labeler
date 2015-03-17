@@ -3,7 +3,7 @@
 describe('Service: pivotalConfig', function () {
 
   // load the service's module
-  beforeEach(module('pivotalBulkLabelerApp'));
+  beforeEach(module('pivotalUtilsApp'));
 
   // instantiate service
   var pivotalConfig;

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pivotalBulkLabelerApp')
+angular.module('pivotalUtilsApp')
   .controller('ApiConfigCtrl', function ($scope, pivotalConfig) {
     $scope.showSuccessMessage = false;
 

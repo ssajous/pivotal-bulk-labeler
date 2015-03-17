@@ -3,7 +3,7 @@
 describe('Controller: ApiConfigCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('pivotalBulkLabelerApp'));
+  beforeEach(module('pivotalUtilsApp'));
 
   var ApiConfigCtrl, scope;
 

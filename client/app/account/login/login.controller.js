@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pivotalBulkLabelerApp')
+angular.module('pivotalUtilsApp')
   .controller('LoginCtrl', function ($scope, Auth, $location) {
     $scope.user = {};
     $scope.errors = {};

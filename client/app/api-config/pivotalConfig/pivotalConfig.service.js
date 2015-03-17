@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pivotalBulkLabelerApp')
+angular.module('pivotalUtilsApp')
   .service('pivotalConfig', function ($resource) {
     var Config = $resource('/api/pivotal-config/:configId', {configId: '@_id'}, {
       update: {

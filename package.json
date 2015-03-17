@@ -1,5 +1,5 @@
 {
-  "name": "pivotal-bulk-labeler",
+  "name": "pivotal-utils",
   "version": "0.0.0",
   "main": "server/app.js",
   "dependencies": {

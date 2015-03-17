@@ -26,7 +26,7 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: 'pivotal-bulk-labeler-secret'
+    session: 'pivotal-utils-secret'
   },
 
   // List of user roles

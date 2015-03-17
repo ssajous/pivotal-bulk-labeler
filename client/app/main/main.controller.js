@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pivotalBulkLabelerApp')
+angular.module('pivotalUtilsApp')
   .controller('MainCtrl', function ($scope, $http) {
     $scope.awesomeThings = [];
 

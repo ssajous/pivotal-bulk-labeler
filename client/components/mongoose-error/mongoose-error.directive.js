@@ -3,7 +3,7 @@
 /**
  * Removes server error when user updates input
  */
-angular.module('pivotalBulkLabelerApp')
+angular.module('pivotalUtilsApp')
   .directive('mongooseError', function () {
     return {
       restrict: 'A',
