@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/pivotalbulklabeler-dev'
+    uri: 'mongodb://localhost/pivotalutils-dev'
   },
 
   seedDB: true

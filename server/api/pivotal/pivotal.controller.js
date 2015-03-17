@@ -28,12 +28,11 @@ exports.getProjects = function(req, res) {
       }
     };
 
-    var reqGet = https.request(options, function(res) {
-      console.log("statusCode: ", res.statusCode);
+    var reqGet = https.request(options, function(resp) {
+      console.log("statusCode: ", resp.statusCode);
 
-
-      res.on('data', function(d) {
-        return res.json(200, d);
+      resp.on('data', function(d) {
+        return res.json(200, JSON.parse(d));
       });
 
     });
@@ -43,7 +42,48 @@ exports.getProjects = function(req, res) {
       console.error(e);
     });
   });
-}
+};
+
+exports.getStories = function(req, res) {
+  getUserConfig(req).then(function(config) {
+    var options = {
+      host : 'www.pivotaltracker.com',
+      port : 443,
+      path : '/services/v5/projects/' + req.params.projectId + '/stories/',
+      method : 'GET',
+      headers: {
+        'X-TrackerToken': config.apiToken
+      }
+    };
+
+    var reqGet = https.request(options, function(resp) {
+      console.log("statusCode: ", resp.statusCode);
+      var buffers = [];
+
+      resp.on('data', function(d) {
+        buffers.push(d);
+      });
+
+      resp.on('end', function(d) {
+        var buf = Buffer.concat(buffers);
+        return res.json(200, JSON.parse(buf));
+      });
+
+    });
+
+    reqGet.end();
+    reqGet.on('error', function(e) {
+      console.error(e);
+    });
+
+    //https.get(options, function(resp) {
+    //  return res.json(200, resp);
+    //}).on('error', function(e) {
+    //  console.error(e);
+    //});
+    //
+  });
+};
 
 // Get list of pivotals
 exports.index = function(req, res) {

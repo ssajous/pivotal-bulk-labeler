@@ -17,9 +17,14 @@
 
         <div class="form-group">
           <label>Project</label>
-
-          <pre ng-bind="projectsString"></pre>
+          <select ng-model="selectedProject" ng-change="projectSelected(selectedProject)">
+            <option ng-repeat="project in projects" value="{{project.id}}">{{project.name}}</option>
+          </select>
         </div>
+
+        <pre ng-repeat="story in stories">
+          <span ng-bind="story.name"></span>
+        </pre>
 
       </form>
     </div>

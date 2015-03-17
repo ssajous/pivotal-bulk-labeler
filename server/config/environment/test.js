@@ -5,6 +5,6 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/pivotalbulklabeler-test'
+    uri: 'mongodb://localhost/pivotalutils-test'
   }
 };

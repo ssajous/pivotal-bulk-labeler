@@ -10,11 +10,14 @@ angular.module('pivotalUtilsApp')
     $http.defaults.headers.common.Authorization = undefined;
 
     pivotalConfig.getConfig().then(function(config) {
-      api.Project = $resource('https://www.pivotaltracker.com/services/v5/projects/', {}, {
-        headers: {
-          'X-TrackerToken': config.apiToken
-        }});
 
+      api.getProjects = function() {
+        return $http.get('/api/pivotal/projects');
+      };
+
+      api.getStories = function(projectId) {
+        return $http.get('/api/pivotal/projects/' + projectId + '/stories');
+      }
 
       deferred.resolve();
     });
