@@ -46,10 +46,15 @@ exports.getProjects = function(req, res) {
 
 exports.getStories = function(req, res) {
   getUserConfig(req).then(function(config) {
+    var queryIndex = req.url.indexOf("?");
+    var query = "";
+    if (queryIndex >= 0) {
+      query = req.url.substring(queryIndex);
+    }
     var options = {
       host : 'www.pivotaltracker.com',
       port : 443,
-      path : '/services/v5/projects/' + req.params.projectId + '/stories/',
+      path : '/services/v5/projects/' + req.params.projectId + '/stories' + query,
       method : 'GET',
       headers: {
         'X-TrackerToken': config.apiToken
