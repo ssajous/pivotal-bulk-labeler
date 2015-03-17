@@ -16,14 +16,8 @@
           <input type="text" name="token" class="form-control" ng-model="config.apiToken" required>
         </div>
 
-        <div class="form-group">
-          <label>Project ID</label>
-
-          <input type="text" name="projectId" class="form-control" ng-model="config.projectId" required>
-        </div>
-
         <div class="form-group has-error">
-          <p class="help-block" ng-show="form.token.$error.required && form.projectId.$error.required && submitted">
+          <p class="help-block" ng-show="form.token.$error.required && submitted">
             Please enter the API Token and Pivotal Project ID.
           </p>
 

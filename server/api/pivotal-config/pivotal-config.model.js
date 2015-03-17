@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var PivotalConfigSchema = new Schema({
   apiToken: String,
-  projectId: String
+  userId: String
 });
 
 module.exports = mongoose.model('PivotalConfig', PivotalConfigSchema);

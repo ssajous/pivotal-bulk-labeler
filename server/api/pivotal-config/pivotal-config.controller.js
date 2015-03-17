@@ -3,9 +3,11 @@
 var _ = require('lodash');
 var PivotalConfig = require('./pivotal-config.model');
 
+
+
 // Get list of pivotal-configs
 exports.index = function(req, res) {
-  PivotalConfig.find(function (err, pivotalConfigs) {
+  PivotalConfig.find({userId: req.user._id}, function (err, pivotalConfigs) {
     if(err) { return handleError(res, err); }
     return res.json(200, pivotalConfigs);
   });
@@ -22,6 +24,7 @@ exports.show = function(req, res) {
 
 // Creates a new pivotalConfig in the DB.
 exports.create = function(req, res) {
+  req.body.userId = req.user._id;
   PivotalConfig.create(req.body, function(err, pivotalConfig) {
     if(err) { return handleError(res, err); }
     return res.json(201, pivotalConfig);
@@ -30,6 +33,7 @@ exports.create = function(req, res) {
 
 // Updates an existing pivotalConfig in the DB.
 exports.update = function(req, res) {
+  req.body.userId = req.user._id;
   if(req.body._id) { delete req.body._id; }
   PivotalConfig.findById(req.params.id, function (err, pivotalConfig) {
     if (err) { return handleError(res, err); }

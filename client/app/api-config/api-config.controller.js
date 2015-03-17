@@ -4,21 +4,13 @@ angular.module('pivotalUtilsApp')
   .controller('ApiConfigCtrl', function ($scope, pivotalConfig) {
     $scope.showSuccessMessage = false;
 
-    pivotalConfig.query(function(configs) {
-      if (configs.length) {
-        $scope.config = configs[0];
-      } else {
-        $scope.config = new pivotalConfig();
-      }
+    pivotalConfig.getConfig().then(function(config) {
+      $scope.config = config;
     });
 
     $scope.saveConfig = function(form) {
       $scope.showSuccessMessage = false;
-      if ($scope.config._id) {
-        $scope.config.$update().then(displaySuccess);
-      } else {
-        $scope.config.$save().then(displaySuccess);
-      }
+      pivotalConfig.save($scope.config).then(displaySuccess);
     };
 
     function displaySuccess() {

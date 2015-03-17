@@ -9,6 +9,7 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/pivotal', require('./api/pivotal'));
   app.use('/api/pivotal-config', require('./api/pivotal-config'));
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
