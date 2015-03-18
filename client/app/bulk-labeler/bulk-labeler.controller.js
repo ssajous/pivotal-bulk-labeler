@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pivotalUtilsApp')
-  .controller('BulkLabelerCtrl', function ($scope, pivotalService) {
+  .controller('BulkLabelerCtrl', function ($scope, pivotalService, $q) {
     $scope.filters = [];
 
     pivotalService.promise.then(function() {
@@ -14,7 +14,6 @@ angular.module('pivotalUtilsApp')
       $scope.projectSelected = function() {
         // load stories for project
         pivotalService.getStories($scope.selectedProject).then(function(results) {
-          console.log(results.data);
           $scope.stories = results.data;
         });
 
@@ -54,7 +53,6 @@ angular.module('pivotalUtilsApp')
           });
         });
 
-        console.log(labels);
         return labels;
       }
 
@@ -64,8 +62,18 @@ angular.module('pivotalUtilsApp')
             _(story.labels).find(function(l) { return l.name === label.name; });
         });
 
+        var promises = [];
+        var promise;
         _(checkedStories).forEach(function(story) {
-          console.log('Deleting label ' + label.name + ' on story ' + story.id);
+          //console.log('Deleting label ' + label.name + ' on story ' + story.id);
+          promise = pivotalService.deleteStoryLabel($scope.selectedProject, story.id, label.id);
+          promises.push(promise);
+        });
+
+        $q.all(promises).then(function() {
+          reloadStories();
+        }, function() {
+          reloadStories();
         });
       };
 
@@ -89,10 +97,12 @@ angular.module('pivotalUtilsApp')
       }).value();
 
       $scope.filters.push(value);
-      console.log($scope.filters);
 
+      reloadStories();
+    }
+
+    function reloadStories() {
       pivotalService.getStories($scope.selectedProject, $scope.filters).then(function(results) {
-        console.log(results.data);
         $scope.stories = results.data;
       });
     }

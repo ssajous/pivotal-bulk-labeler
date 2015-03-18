@@ -59,7 +59,7 @@ exports.deleteStoryLabel = function(req, res) {
     var options = getBaseOptions(url, config.apiToken, 'DELETE');
 
     var reqDelete = https.request(options, function(resp) {
-      return resp.statusCode();
+      return res.json(resp.statusCode);
     });
 
     reqDelete.end();
