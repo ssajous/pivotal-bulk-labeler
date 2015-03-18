@@ -10,3 +10,15 @@
 a.story-link {
   color: #0000ee;
 }
+
+.button-group {
+  margin-bottom: 4px;
+}
+
+.group-label {
+  display: inline-block;
+}
+
+.close-icon:hover {
+  color: black;
+}

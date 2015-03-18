@@ -23,6 +23,11 @@ angular.module('pivotalUtilsApp')
         return $http.get('/api/pivotal/projects/' + projectId + '/labels');
       };
 
+      api.deleteStoryLabel = function(projectId, storyId, labelId) {
+        return $http.delete('/api/pivotal/projects/' + projectId + '/stories/' +
+          storyId + '/labels/' + labelId);
+      }
+
       deferred.resolve();
     });
 

@@ -10,6 +10,9 @@ router.get('/projects', auth.isAuthenticated(), controller.getProjects);
 router.get('/projects/:projectId/stories', auth.isAuthenticated(), controller.getStories);
 router.get('/projects/:projectId/labels', auth.isAuthenticated(), controller.getLabels);
 
+router.delete('/projects/:projectId/stories/:storyId/label/:labelId', auth.isAuthenticated(),
+  controller.deleteStoryLabel);
+
 router.get('/', auth.isAuthenticated(), controller.index);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', auth.isAuthenticated(), controller.create);

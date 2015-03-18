@@ -20,7 +20,6 @@ angular.module('pivotalUtilsApp')
 
         pivotalService.getLabels($scope.selectedProject).then(function(results) {
           $scope.labels = results.data;
-          console.log($scope.labels);
         });
       };
 
@@ -35,6 +34,46 @@ angular.module('pivotalUtilsApp')
 
         addFilter(filter);
       };
+
+      $scope.checkAllStories = function() {
+        _($scope.stories).forEach(function(story) { story.checked = true; });
+      };
+
+      $scope.uncheckAllStories = function() {
+        _($scope.stories).forEach(function(story) { story.checked = false; });
+      };
+
+      $scope.selectedLabels = function() {
+        var checkedStories = getCheckedStories();
+        var labels = [];
+        _(checkedStories).forEach(function(story) {
+          _(story.labels).forEach(function(label) {
+            if (!_(labels).find(function(l) { return l.name === label.name})) {
+              labels.push(label);
+            }
+          });
+        });
+
+        console.log(labels);
+        return labels;
+      }
+
+      $scope.deleteLabel = function(label) {
+        var checkedStories = _($scope.stories).filter(function(story) {
+          return story.checked && story.labels.length > 0 &&
+            _(story.labels).find(function(l) { return l.name === label.name; });
+        });
+
+        _(checkedStories).forEach(function(story) {
+          console.log('Deleting label ' + label.name + ' on story ' + story.id);
+        });
+      };
+
+      function getCheckedStories() {
+        return _($scope.stories).filter(function(story) {
+          return story.checked && story.labels.length > 0;
+        }).value();
+      }
     });
 
     function addFilter(value) {

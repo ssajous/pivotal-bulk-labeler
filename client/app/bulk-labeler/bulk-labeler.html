@@ -40,10 +40,18 @@
           </select>
         </div>
 
+        <div ng-show="selectedProject && stories && stories.length" class="button-group">
+          <button class="btn btn-primary" ng-click="checkAllStories()">Check All</button>
+          <button class="btn btn-primary" ng-click="uncheckAllStories()">Uncheck All</button>
+          <span ng-repeat="label in selectedLabels()" class="label label-info padded group-label">
+            <span class="glyphicon glyphicon-remove close-icon" ng-click="deleteLabel(label)"></span>
+            {{label.name}}
+          </span>
+        </div>
         <div ng-repeat="story in stories">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><input type="checkbox" />
+              <h3 class="panel-title"><input type="checkbox" ng-model="story.checked" />
                 <a class="story-link" target="_blank" ng-href="{{story.url}}">{{story.id}} &mdash; {{story.name}}</a></h3>
             </div>
             <div class="panel-body">

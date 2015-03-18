@@ -16,12 +16,12 @@ function getUserConfig(req) {
   return deferred.promise;
 }
 
-function getBaseOptions(url, apiToken) {
+function getBaseOptions(url, apiToken, method) {
   var options = {
     host : 'www.pivotaltracker.com',
     port : 443,
     path : url,
-    method : 'GET',
+    method : method || 'GET',
     headers: {
       'X-TrackerToken': apiToken
     }
@@ -50,7 +50,24 @@ exports.getLabels = function(req, res) {
       console.error(e);
     });
   });
-}
+};
+
+exports.deleteStoryLabel = function(req, res) {
+  getUserConfig(req).then(function(config) {
+    var url = '/services/v5/projects/' + req.params.projectId + '/stories/' +
+        req.params.storyId + '/labels/' + req.params.labelId;
+    var options = getBaseOptions(url, config.apiToken, 'DELETE');
+
+    var reqDelete = https.request(options, function(resp) {
+      return resp.statusCode();
+    });
+
+    reqDelete.end();
+    reqDelete.on('error', function(e) {
+      console.error(e);
+    });
+  });
+};
 
 exports.getProjects = function(req, res) {
   getUserConfig(req).then(function(config) {
