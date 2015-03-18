@@ -19,6 +19,10 @@ angular.module('pivotalUtilsApp')
         return $http.get('/api/pivotal/projects/' + projectId + '/stories' + buildQueryString(filters));
       }
 
+      api.getLabels = function(projectId) {
+        return $http.get('/api/pivotal/projects/' + projectId + '/labels');
+      };
+
       deferred.resolve();
     });
 
@@ -42,6 +46,7 @@ angular.module('pivotalUtilsApp')
 
       return queryString;
     }
+
 
     // Public API here
     return api;

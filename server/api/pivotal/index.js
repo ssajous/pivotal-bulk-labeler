@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/projects', auth.isAuthenticated(), controller.getProjects);
 router.get('/projects/:projectId/stories', auth.isAuthenticated(), controller.getStories);
+router.get('/projects/:projectId/labels', auth.isAuthenticated(), controller.getLabels);
 
 router.get('/', auth.isAuthenticated(), controller.index);
 router.get('/:id', auth.isAuthenticated(), controller.show);

@@ -33,12 +33,18 @@
             <option>accepted</option>
             <option>rejected</option>
           </select>
+
+          <label>Label Filter</label>
+          <select ng-model="selectedLabel" ng-change="labelSelected(selectedLabel)">
+            <option ng-repeat="label in labels" value="{{label.name}}">{{label.name}}</option>
+          </select>
         </div>
 
         <div ng-repeat="story in stories">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><input type="checkbox" /> {{story.id}} &mdash; {{story.name}}</h3>
+              <h3 class="panel-title"><input type="checkbox" />
+                <a class="story-link" target="_blank" ng-href="{{story.url}}">{{story.id}} &mdash; {{story.name}}</a></h3>
             </div>
             <div class="panel-body">
               <div>

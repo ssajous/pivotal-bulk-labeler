@@ -16,21 +16,47 @@ function getUserConfig(req) {
   return deferred.promise;
 }
 
-exports.getProjects = function(req, res) {
+function getBaseOptions(url, apiToken) {
+  var options = {
+    host : 'www.pivotaltracker.com',
+    port : 443,
+    path : url,
+    method : 'GET',
+    headers: {
+      'X-TrackerToken': apiToken
+    }
+  };
+
+  return options;
+}
+exports.getLabels = function(req, res) {
   getUserConfig(req).then(function(config) {
-    var options = {
-      host : 'www.pivotaltracker.com',
-      port : 443,
-      path : '/services/v5/projects', // the rest of the url with parameters if needed
-      method : 'GET',
-      headers: {
-        'X-TrackerToken': config.apiToken
-      }
-    };
+    var buffers = [];
+    var options = getBaseOptions('/services/v5/projects/' + req.params.projectId + '/labels',
+      config.apiToken);
 
     var reqGet = https.request(options, function(resp) {
-      console.log("statusCode: ", resp.statusCode);
+      resp.on('data', function(d) {
+        buffers.push(d);
+      });
 
+      resp.on('end', function() {
+        return res.json(200, JSON.parse(Buffer.concat(buffers)));
+      });
+    });
+
+    reqGet.end();
+    reqGet.on('error', function(e) {
+      console.error(e);
+    });
+  });
+}
+
+exports.getProjects = function(req, res) {
+  getUserConfig(req).then(function(config) {
+    var options = getBaseOptions('/services/v5/projects', config.apiToken);
+
+    var reqGet = https.request(options, function(resp) {
       resp.on('data', function(d) {
         return res.json(200, JSON.parse(d));
       });
@@ -51,15 +77,8 @@ exports.getStories = function(req, res) {
     if (queryIndex >= 0) {
       query = req.url.substring(queryIndex);
     }
-    var options = {
-      host : 'www.pivotaltracker.com',
-      port : 443,
-      path : '/services/v5/projects/' + req.params.projectId + '/stories' + query,
-      method : 'GET',
-      headers: {
-        'X-TrackerToken': config.apiToken
-      }
-    };
+    var options = getBaseOptions('/services/v5/projects/' + req.params.projectId + '/stories' + query,
+      config.apiToken);
 
     var reqGet = https.request(options, function(resp) {
       console.log("statusCode: ", resp.statusCode);
@@ -81,12 +100,6 @@ exports.getStories = function(req, res) {
       console.error(e);
     });
 
-    //https.get(options, function(resp) {
-    //  return res.json(200, resp);
-    //}).on('error', function(e) {
-    //  console.error(e);
-    //});
-    //
   });
 };
 
