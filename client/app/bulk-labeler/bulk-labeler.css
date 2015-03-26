@@ -22,3 +22,7 @@ a.story-link {
 .close-icon:hover {
   color: black;
 }
+
+.delete-indicator:hover {
+  background-color: #d9534f;
+}

@@ -1,0 +1,33 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container ng-cloak">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-success" role="alert" ng-show="showSuccessMessage">Pivotal Tracker labels updated
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Label Editor</h2>
+    </div>
+  </div>
+  <div class="row">
+    <form class="form" name="form" novalidate>
+
+      <div class="form-group">
+        <label>Project</label>
+        <select ng-model="selectedProject" ng-change="projectSelected(selectedProject)">
+          <option ng-repeat="project in projects" value="{{project.id}}">{{project.name}}</option>
+        </select>
+      </div>
+
+      <ul class="list-group">
+        <li class="list-group-item delete-indicator" ng-repeat="label in labels">
+          {{label.name}}
+          <button class="glyphicon glyphicon-remove pull-right" ng-click="deleteLabel(label)"></button>
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>

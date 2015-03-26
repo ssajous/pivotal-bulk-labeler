@@ -52,6 +52,24 @@ exports.getLabels = function(req, res) {
   });
 };
 
+exports.deleteLabel = function(req, res) {
+  getUserConfig(req).then(function(config) {
+    var url = '/services/v5/projects/' + req.params.projectId + '/labels/' +
+      req.params.labelId;
+    var options = getBaseOptions(url, config.apiToken, 'DELETE');
+
+    var reqDelete = https.request(options, function(resp) {
+      return res.json(resp.statusCode);
+    });
+
+    reqDelete.end();
+    reqDelete.on('error', function(e) {
+      console.error(e);
+    });
+  });
+
+};
+
 exports.deleteStoryLabel = function(req, res) {
   getUserConfig(req).then(function(config) {
     var url = '/services/v5/projects/' + req.params.projectId + '/stories/' +
