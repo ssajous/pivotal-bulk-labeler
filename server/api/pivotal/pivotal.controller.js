@@ -92,13 +92,19 @@ exports.getProjects = function(req, res) {
     var options = getBaseOptions('/services/v5/projects', config.apiToken);
 
     var reqGet = https.request(options, function(resp) {
+      var buffers = [];
       resp.on('data', function(d) {
-        return res.json(200, JSON.parse(d));
+        buffers.push(d);
       });
 
+      resp.on('end', function(d) {
+        var buf = Buffer.concat(buffers);
+        return res.json(200, JSON.parse(buf));
+      });
     });
 
     reqGet.end();
+
     reqGet.on('error', function(e) {
       console.error(e);
     });
